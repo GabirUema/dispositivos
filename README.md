@@ -42,4 +42,8 @@ Credenciais de teste devem ser consultadas no enunciado da atividade; nenhuma se
 
 ## Entrega
 
-Conecte o projeto ao seu GitHub pelo Lovable e envie o link do repositório no Moodle junto com vídeo ou capturas do fluxo acima. O repositório não é publicado no GitHub nem o trabalho enviado ao Moodle automaticamente por esta implementação. Como esta entrega foi escolhida como versão web, confirme com o professor se ela atende ao requisito originalmente descrito em Flutter.
+Repositório da entrega: https://github.com/GabirUema/dispositivos
+
+O repositório contém o código-fonte nas pastas `src` e `public`, os arquivos de configuração e este README. As sete capturas reais estão na pasta [`capturas`](https://github.com/GabirUema/dispositivos/tree/main/capturas): erro de senha, login com catálogo, sessão restaurada, formulário de cadastro, cadastro concluído, login da nova conta e retorno ao login após logout.
+
+Envie o link do repositório no Moodle e anexe as capturas solicitadas. O envio ao Moodle não é automático. Esta é uma versão web, não Flutter; confirme com o professor se atende ao formato exigido na atividade.
