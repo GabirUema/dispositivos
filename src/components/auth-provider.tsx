@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import { ApiError, getMe, login, TOKEN_KEY, type User } from '@/lib/mobile-api';
+import { ApiError, ApiService, getMe, login, SESSION_EXPIRED, TOKEN_KEY, type User } from '@/lib/mobile-api';
+import { toast } from 'sonner';
 
 interface AuthState { user: User | null; token: string | null; ready: boolean; error: string; signIn: (username: string, password: string) => Promise<void>; signOut: () => void; retry: () => void }
 const AuthContext = createContext<AuthState | null>(null);
@@ -20,13 +21,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           if (active) { setToken(saved); setUser(profile); }
         }
       } catch (err) {
-        if (err instanceof ApiError && err.status === 401) localStorage.removeItem(TOKEN_KEY);
+        if (err instanceof ApiError && err.status === 401) { localStorage.removeItem(TOKEN_KEY); toast.error(SESSION_EXPIRED); }
         if (active) setError(err instanceof Error ? err.message : 'Não foi possível recuperar a sessão.');
       } finally { if (active) setReady(true); }
     }
     void restore();
     return () => { active = false; };
   }, [attempt]);
+  useEffect(() => {
+    ApiService.onUnauthorized = () => { setToken(null); setUser(null); setError(SESSION_EXPIRED); toast.error(SESSION_EXPIRED); };
+    return () => { ApiService.onUnauthorized = null; };
+  }, []);
   async function signIn(username: string, password: string) {
     const accessToken = await login(username, password);
     const profile = await getMe(accessToken);

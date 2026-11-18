@@ -23,7 +23,7 @@ describe('Sessão do usuário', () => {
     await waitFor(() => expect(result.current.ready).toBe(true));
     expect(result.current.token).toBe('saved-jwt');
     expect(result.current.user?.username).toBe('aluno');
-    expect(fetcher).toHaveBeenCalledWith(expect.stringContaining('/auth/me'), expect.objectContaining({ headers: { Authorization: 'Bearer saved-jwt' } }));
+    expect(fetcher).toHaveBeenCalledWith(expect.stringContaining('/auth/me'), expect.objectContaining({ headers: { 'Content-Type': 'application/json', Authorization: 'Bearer saved-jwt' } }));
   });
   it('remove o token e o usuário no logout', async () => {
     localStorage.setItem(TOKEN_KEY, 'saved-jwt');

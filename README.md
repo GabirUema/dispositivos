@@ -47,3 +47,16 @@ Repositório da entrega: https://github.com/GabirUema/dispositivos
 O repositório contém o código-fonte nas pastas `src` e `public`, os arquivos de configuração e este README. As sete capturas reais estão na pasta [`capturas`](https://github.com/GabirUema/dispositivos/tree/main/capturas): erro de senha, login com catálogo, sessão restaurada, formulário de cadastro, cadastro concluído, login da nova conta e retorno ao login após logout.
 
 Envie o link do repositório no Moodle e anexe as capturas solicitadas. O envio ao Moodle não é automático. Esta é uma versão web, não Flutter; confirme com o professor se atende ao formato exigido na atividade.
+
+## Atividade 4 — Catálogo protegido com JWT
+
+- O token fica salvo no `localStorage` na chave `jwt_token`. É o equivalente web do `shared_preferences`.
+- A classe `ApiService` (`src/lib/mobile-api.ts`, passo 7 do tutorial) lê o token salvo e assina **todas** as requisições (`GET`, `POST`, `PUT`, `DELETE /produtos`) com:
+  ```
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer <token>'
+  ```
+- Se a API responder **401**, o app remove o `jwt_token`, mostra o aviso "Sua sessão expirou. Faça login novamente" e volta para a tela de login.
+- No catálogo, os botões **Novo produto**, **Editar** e **Excluir** usam `POST`, `PUT` e `DELETE` com o token.
+
+Capturas na pasta [`capturas/atividade-4`](https://github.com/GabirUema/dispositivos/tree/main/capturas/atividade-4): token inválido (não autenticado), login com catálogo carregado (200), formulário de novo produto (POST), produto cadastrado e produto editado (PUT).
